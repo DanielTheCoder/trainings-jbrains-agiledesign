@@ -10,7 +10,7 @@ namespace Tests.HappyZone
             var barcodeQuery = new BarcodeQuery();
             var productPriceResult = new ProductPriceResult();
 
-            var cachRegisterProcessorRendererTestDouble = new CachRegisterProcessorRendererTestDouble();
+            var cachRegisterProcessorRendererTestDouble = new CashRegisterProcessorRendererTestDouble();
             var productPriceProviderTestDouble = new ProductPriceProviderTestDouble(productPriceResult);
             var cashRegisterProcessor = new CashRegisterProcessor(productPriceProviderTestDouble, cachRegisterProcessorRendererTestDouble);
 
@@ -20,7 +20,7 @@ namespace Tests.HappyZone
         }
     }
 
-    public class CachRegisterProcessorRendererTestDouble : ICachRegisterProcessorRenderer
+    public class CashRegisterProcessorRendererTestDouble : ICachRegisterProcessorRenderer
     {
         public ProductPriceResult ResultToRender { get; private set; }
 
