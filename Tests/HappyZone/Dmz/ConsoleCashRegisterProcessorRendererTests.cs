@@ -3,7 +3,7 @@ using System.IO;
 using Tests.Implementation;
 using Xunit;
 
-namespace Tests.HappyZone
+namespace Tests.HappyZone.Dmz
 {
     public class ConsoleCashRegisterProcessorRendererTests
     {

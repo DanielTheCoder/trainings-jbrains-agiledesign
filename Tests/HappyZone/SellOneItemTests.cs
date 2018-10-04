@@ -16,6 +16,13 @@ namespace Tests.HappyZone
      *
      */
 
+
+     /// <summary>
+     /// colaboration tests => shows what's possible
+     /// contract tests show that's possible, it works
+     ///
+     /// these End2EndTests are are collaboration tests
+     /// </summary>
     public class SellOneItemTests
     {
         [Fact]
@@ -37,6 +44,8 @@ namespace Tests.HappyZone
         public void End2End_UnknownProductBarcode_WillResultIn_UnknownProduct()
         {
             //discuss because behaviour of result known/unknow and renderer ????
+            // smell => internals are external visibile, implementation detail
+
 
             var unknownBarcode = new BarcodeQuery();
             var unknownProductPriceResult = new UnknownProductPriceResult();
