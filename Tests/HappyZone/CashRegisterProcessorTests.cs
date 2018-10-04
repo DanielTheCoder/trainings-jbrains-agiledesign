@@ -1,21 +1,20 @@
-using System;
 using Xunit;
 
-namespace Tests
+namespace Tests.HappyZone
 {
     public class CashRegisterProcessorTests
     {
         [Fact]
         public void CashRegisterProcessor_WithKnownProductBarcode_ProvidesKnownProductPrice()
         {
-            var productPriceResult = new ProductPriceResult();
             var productPriceQuery = new ProductPriceQuery();
+            var productPriceResult = new ProductPriceResult();
 
             var cachRegisterProcessorRendererTestDouble = new CachRegisterProcessorRendererTestDouble();
             var productPriceProviderTestDouble = new ProductPriceProviderTestDouble(productPriceResult);
             var cashRegisterProcessor = new CashRegisterProcessor(productPriceProviderTestDouble, cachRegisterProcessorRendererTestDouble);
 
-
+            //maybe OnBarcode
             cashRegisterProcessor.Process(productPriceQuery);
 
             Assert.Equal(productPriceResult, cachRegisterProcessorRendererTestDouble.ResultToRender);
