@@ -2,20 +2,19 @@ using Xunit;
 
 namespace Tests.HappyZone
 {
-    public class CashRegisterProcessorTests
+    public class SellOneItemTests
     {
         [Fact]
-        public void CashRegisterProcessor_WithKnownProductBarcode_ProvidesKnownProductPrice()
+        public void KnownProductBarcode_WillResultIn_ProductPrice()
         {
-            var productPriceQuery = new ProductPriceQuery();
+            var barcodeQuery = new BarcodeQuery();
             var productPriceResult = new ProductPriceResult();
 
             var cachRegisterProcessorRendererTestDouble = new CachRegisterProcessorRendererTestDouble();
             var productPriceProviderTestDouble = new ProductPriceProviderTestDouble(productPriceResult);
             var cashRegisterProcessor = new CashRegisterProcessor(productPriceProviderTestDouble, cachRegisterProcessorRendererTestDouble);
 
-            //maybe OnBarcode
-            cashRegisterProcessor.Process(productPriceQuery);
+            cashRegisterProcessor.OnBarcode(barcodeQuery);
 
             Assert.Equal(productPriceResult, cachRegisterProcessorRendererTestDouble.ResultToRender);
         }
@@ -41,7 +40,7 @@ namespace Tests.HappyZone
             _productPriceResult = productPriceResult;
         }
 
-        public ProductPriceResult Query(ProductPriceQuery productPriceQuery)
+        public ProductPriceResult Query(BarcodeQuery barcodeQuery)
         {
             return _productPriceResult;
         }

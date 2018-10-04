@@ -13,9 +13,9 @@ namespace Tests.HappyZone
             _cachRegisterProcessorRenderer = cachRegisterProcessorRenderer;
         }
 
-        public void Process(ProductPriceQuery productPriceQuery)
+        public void OnBarcode(BarcodeQuery barcodeQuery)
         {
-            var result = _productPriceProvider.Query(productPriceQuery);
+            var result = _productPriceProvider.Query(barcodeQuery);
             _cachRegisterProcessorRenderer.Render(result);
 
         }
@@ -30,7 +30,7 @@ namespace Tests.HappyZone
 
     public interface IProductPriceProvider
     {
-        ProductPriceResult Query(ProductPriceQuery productPriceQuery);
+        ProductPriceResult Query(BarcodeQuery barcodeQuery);
     }
 
 
@@ -39,7 +39,7 @@ namespace Tests.HappyZone
     }
 
 
-    public class ProductPriceQuery
+    public class BarcodeQuery
     {
     }
 }
