@@ -2,6 +2,18 @@ using Xunit;
 
 namespace Tests.HappyZone
 {
+    /*
+     * overall design idea
+     * dmz
+     * - stdin => BarcodeQuery (interface for different barcode types?)
+     * - CashRegisterProcessorRenderer =>
+     *   - ProductPriceResult => stdout (interface of different result types like unknownproduct vs. knownproduct => dmz is responsible to react how to render)
+     * - ProductPriceProvider
+     *   - Getting price from some storage based on barcode
+     *
+     *
+     */
+
     public class SellOneItemTests
     {
         [Fact]
@@ -10,13 +22,13 @@ namespace Tests.HappyZone
             var barcodeQuery = new BarcodeQuery();
             var productPriceResult = new ProductPriceResult();
 
-            var cachRegisterProcessorRendererTestDouble = new CashRegisterProcessorRendererTestDouble();
+            var cashRegisterProcessorRendererTestDouble = new CashRegisterProcessorRendererTestDouble();
             var productPriceProviderTestDouble = new ProductPriceProviderTestDouble(productPriceResult);
-            var cashRegisterProcessor = new CashRegisterProcessor(productPriceProviderTestDouble, cachRegisterProcessorRendererTestDouble);
+            var cashRegisterProcessor = new CashRegisterProcessor(productPriceProviderTestDouble, cashRegisterProcessorRendererTestDouble);
 
             cashRegisterProcessor.OnBarcode(barcodeQuery);
 
-            Assert.Equal(productPriceResult, cachRegisterProcessorRendererTestDouble.ResultToRender);
+            Assert.Equal(productPriceResult, cashRegisterProcessorRendererTestDouble.ResultToRender);
         }
     }
 

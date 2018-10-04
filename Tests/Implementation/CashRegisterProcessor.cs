@@ -33,12 +33,12 @@ namespace Tests.HappyZone
         ProductPriceResult Query(BarcodeQuery barcodeQuery);
     }
 
-
+    //maybe this is an interface => KnownProductPriceResult and UnknownProduct ??
     public class ProductPriceResult
     {
     }
 
-
+    // maybe this is an interface to abstract different implementation of barcodes ??
     public class BarcodeQuery
     {
     }
