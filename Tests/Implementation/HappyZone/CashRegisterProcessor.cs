@@ -29,18 +29,6 @@ namespace Tests.Implementation
         void Render(IProductPriceResult result);
     }
 
-    public class ConsoleCashRegisterProcessorRenderer : ICashRegisterProcessorRenderer
-    {
-        public void Render(IProductPriceResult result)
-        {
-            var formatedResult = result.ToString();
-
-            System.Console.SetOut(new StringWriter());
-
-            System.Console.WriteLine(formatedResult);
-        }
-    }
-
 
     public interface IProductPriceProvider
     {
@@ -58,6 +46,17 @@ namespace Tests.Implementation
 
     public class KnownProductPriceResult : IProductPriceResult
     {
+        public decimal Value { get; }
+
+        public KnownProductPriceResult()
+        {
+            Value = 0;
+        }
+
+        public KnownProductPriceResult(decimal value)
+        {
+            Value = value;
+        }
     }
 
     // maybe this is an interface to abstract different implementation of barcodes ??
