@@ -3,7 +3,7 @@ using Tests.Implementation.HappyZone;
 
 namespace Tests.Implementation.Dmz
 {
-    public class ConsoleCashRegisterProcessorRenderer : ICashRegisterProcessorRenderer
+    public class ConsoleCashRegisterRenderer : ICashRegisterRenderer
     {
         public void Render(IProductPriceResult result)
         {

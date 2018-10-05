@@ -3,25 +3,25 @@ using Tests.Implementation.HappyZone;
 
 namespace Tests.Implementation.Dmz
 {
-    public class InMemoryProductPriceProvider : IProductPriceProvider
+    public class InMemoryProductCatalog : IProductCatalog
     {
-        private readonly (BarcodeQuery, IProductPriceResult)[] _listOfKnownPrices;
+        private readonly (Barcode, IProductPriceResult)[] _listOfKnownPrices;
 
-        public InMemoryProductPriceProvider((BarcodeQuery, IProductPriceResult)[] listOfKnownPrices)
+        public InMemoryProductCatalog((Barcode, IProductPriceResult)[] listOfKnownPrices)
         {
             _listOfKnownPrices = listOfKnownPrices;
         }
 
-        public InMemoryProductPriceProvider() : this(null)
+        public InMemoryProductCatalog() : this(null)
         {}
 
-        public IProductPriceResult Query(BarcodeQuery barcodeQuery)
+        public IProductPriceResult GetPrice(Barcode barcode)
         {
-            (BarcodeQuery, IProductPriceResult) result = default;
+            (Barcode, IProductPriceResult) result = default;
 
             if (_listOfKnownPrices != null)
             {
-                result = _listOfKnownPrices.SingleOrDefault(kp => kp.Item1 == barcodeQuery);
+                result = _listOfKnownPrices.SingleOrDefault(kp => kp.Item1 == barcode);
             }
 
             if (result != default)

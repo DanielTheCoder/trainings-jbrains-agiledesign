@@ -1,13 +1,12 @@
-using Tests.Implementation;
 using Tests.Implementation.HappyZone;
 using Xunit;
 
-namespace Tests.HappyZone
+namespace Tests.Tests
 {
     /*
      * overall design idea
      * dmz
-     * - stdin => BarcodeQuery (interface for different barcode types?)
+     * - stdin => Barcode (interface for different barcode types?)
      * - CashRegisterProcessorRenderer =>
      *   - IProductPriceResult => stdout (interface of different result types like unknownproduct vs. knownproduct => dmz is responsible to react how to render)
      *   - is IProductPriceResult a message ???
@@ -29,11 +28,11 @@ namespace Tests.HappyZone
         [Fact]
         public void End2End_KnownProductBarcode_WillResultIn_ProductPrice()
         {
-            var knownBarcode = new BarcodeQuery();
+            var knownBarcode = new Barcode();
             var knownProductPriceResult = new KnownProductPriceResult();
 
-            var cashRegisterProcessorRendererTestDouble = new CashRegisterProcessorRendererTestDouble();
-            var productPriceProviderTestDouble = new ProductPriceProviderTestDouble(knownProductPriceResult);
+            var cashRegisterProcessorRendererTestDouble = new CashRegisterRendererTestDouble();
+            var productPriceProviderTestDouble = new ProductCatalogTestDouble(knownProductPriceResult);
             var cashRegisterProcessor = new CashRegisterProcessor(productPriceProviderTestDouble, cashRegisterProcessorRendererTestDouble);
 
             cashRegisterProcessor.OnBarcode(knownBarcode);
@@ -48,11 +47,11 @@ namespace Tests.HappyZone
             // smell => internals are external visibile, implementation detail
 
 
-            var unknownBarcode = new BarcodeQuery();
+            var unknownBarcode = new Barcode();
             var unknownProductPriceResult = new UnknownProductPriceResult();
 
-            var cashRegisterProcessorRendererTestDouble = new CashRegisterProcessorRendererTestDouble();
-            var productPriceProviderTestDouble = new ProductPriceProviderTestDouble(unknownProductPriceResult);
+            var cashRegisterProcessorRendererTestDouble = new CashRegisterRendererTestDouble();
+            var productPriceProviderTestDouble = new ProductCatalogTestDouble(unknownProductPriceResult);
             var cashRegisterProcessor = new CashRegisterProcessor(productPriceProviderTestDouble, cashRegisterProcessorRendererTestDouble);
 
             cashRegisterProcessor.OnBarcode(unknownBarcode);
@@ -60,7 +59,7 @@ namespace Tests.HappyZone
             Assert.Equal(unknownProductPriceResult, cashRegisterProcessorRendererTestDouble.ResultToRender);
         }
 
-        public class CashRegisterProcessorRendererTestDouble : ICashRegisterProcessorRenderer
+        public class CashRegisterRendererTestDouble : ICashRegisterRenderer
         {
             public IProductPriceResult ResultToRender { get; private set; }
 
@@ -71,16 +70,16 @@ namespace Tests.HappyZone
         }
 
 
-        public class ProductPriceProviderTestDouble : IProductPriceProvider
+        public class ProductCatalogTestDouble : IProductCatalog
         {
             private readonly IProductPriceResult _productPriceResult;
 
-            public ProductPriceProviderTestDouble(IProductPriceResult productPriceResult)
+            public ProductCatalogTestDouble(IProductPriceResult productPriceResult)
             {
                 _productPriceResult = productPriceResult;
             }
 
-            public IProductPriceResult Query(BarcodeQuery barcodeQuery)
+            public IProductPriceResult GetPrice(Barcode barcode)
             {
                 return _productPriceResult;
             }

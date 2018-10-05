@@ -2,63 +2,22 @@ namespace Tests.Implementation.HappyZone
 {
     public class CashRegisterProcessor
     {
-        private readonly IProductPriceProvider _productPriceProvider;
-        private readonly ICashRegisterProcessorRenderer _cashRegisterProcessorRenderer;
+        private readonly IProductCatalog _productCatalog;
+        private readonly ICashRegisterRenderer _cashRegisterRenderer;
 
         public CashRegisterProcessor(
-            IProductPriceProvider productPriceProvider,
-            ICashRegisterProcessorRenderer cashRegisterProcessorRenderer)
+            IProductCatalog productCatalog,
+            ICashRegisterRenderer cashRegisterRenderer)
         {
-            _productPriceProvider = productPriceProvider;
-            _cashRegisterProcessorRenderer = cashRegisterProcessorRenderer;
+            _productCatalog = productCatalog;
+            _cashRegisterRenderer = cashRegisterRenderer;
         }
 
-        public void OnBarcode(BarcodeQuery barcodeQuery)
+        public void OnBarcode(Barcode barcode)
         {
-            var result = _productPriceProvider.Query(barcodeQuery);
-            _cashRegisterProcessorRenderer.Render(result);
+            var productPriceResult = _productCatalog.GetPrice(barcode);
+            _cashRegisterRenderer.Render(productPriceResult);
 
         }
-    }
-
-
-    public interface ICashRegisterProcessorRenderer
-    {
-        void Render(IProductPriceResult result);
-    }
-
-
-    public interface IProductPriceProvider
-    {
-        IProductPriceResult Query(BarcodeQuery barcodeQuery);
-    }
-
-    //maybe this is an interface => KnownProductPriceResult and UnknownProduct ??
-    public interface IProductPriceResult
-    {
-    }
-
-    public class UnknownProductPriceResult : IProductPriceResult
-    {
-    }
-
-    public class KnownProductPriceResult : IProductPriceResult
-    {
-        public decimal Value { get; }
-
-        public KnownProductPriceResult()
-        {
-            Value = 0;
-        }
-
-        public KnownProductPriceResult(decimal value)
-        {
-            Value = value;
-        }
-    }
-
-    // maybe this is an interface to abstract different implementation of barcodes ??
-    public class BarcodeQuery
-    {
     }
 }

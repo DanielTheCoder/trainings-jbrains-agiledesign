@@ -1,16 +1,15 @@
 using System;
 using System.IO;
-using Tests.Implementation;
 using Tests.Implementation.Dmz;
 using Tests.Implementation.HappyZone;
 using Xunit;
 
-namespace Tests.HappyZone.Dmz
+namespace Tests.Tests.Dmz
 {
     public class ConsoleCashRegisterProcessorRendererTests
     {
         private readonly StringWriter _stringWriter;
-        private readonly ConsoleCashRegisterProcessorRenderer _consoleCashRegisterProcessorRenderer;
+        private readonly ConsoleCashRegisterRenderer _consoleCashRegisterRenderer;
 
         public ConsoleCashRegisterProcessorRendererTests()
         {
@@ -18,13 +17,13 @@ namespace Tests.HappyZone.Dmz
             _stringWriter = new StringWriter();
             Console.SetOut(_stringWriter);
 
-            _consoleCashRegisterProcessorRenderer = new ConsoleCashRegisterProcessorRenderer();
+            _consoleCashRegisterRenderer = new ConsoleCashRegisterRenderer();
         }
 
         [Fact]
         public void RenderingOfKnownProductPrice()
         {
-            _consoleCashRegisterProcessorRenderer.Render(new KnownProductPriceResult(1234.12m));
+            _consoleCashRegisterRenderer.Render(new KnownProductPriceResult(1234.12m));
 
             Assert.Equal("1234,12", _stringWriter.ToString());
         }
@@ -32,7 +31,7 @@ namespace Tests.HappyZone.Dmz
         [Fact]
         public void RenderingOfUnknownProductPrice()
         {
-            _consoleCashRegisterProcessorRenderer.Render(new UnknownProductPriceResult());
+            _consoleCashRegisterRenderer.Render(new UnknownProductPriceResult());
 
             //ToDo: check requirements !!!
             Assert.Equal("Unknown product", _stringWriter.ToString());
