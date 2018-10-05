@@ -28,14 +28,14 @@ namespace Tests.Tests
         [Fact]
         public void End2End_KnownProductBarcode_WillResultIn_ProductPrice()
         {
-            var knownBarcode = new Barcode("123");
             var knownProductPriceResult = new KnownProductPriceResult();
 
             var cashRegisterProcessorRendererTestDouble = new CashRegisterRendererTestDouble();
             var productPriceProviderTestDouble = new ProductCatalogTestDouble(knownProductPriceResult);
-            var cashRegisterProcessor = new CashRegisterProcessor(productPriceProviderTestDouble, cashRegisterProcessorRendererTestDouble);
+            var barcodeInterpreterTestDouble = new BarcodeInterpreterTestDouble();
+            var cashRegisterProcessor = new CashRegisterProcessor(productPriceProviderTestDouble, cashRegisterProcessorRendererTestDouble, barcodeInterpreterTestDouble);
 
-            cashRegisterProcessor.OnBarcode(knownBarcode);
+            cashRegisterProcessor.OnBarcode("123");
 
             Assert.Equal(knownProductPriceResult, cashRegisterProcessorRendererTestDouble.ResultToRender);
         }
@@ -47,14 +47,14 @@ namespace Tests.Tests
             // smell => internals are external visibile, implementation detail
 
 
-            var unknownBarcode = new Barcode("123");
             var unknownProductPriceResult = new UnknownProductPriceResult();
 
             var cashRegisterProcessorRendererTestDouble = new CashRegisterRendererTestDouble();
             var productPriceProviderTestDouble = new ProductCatalogTestDouble(unknownProductPriceResult);
-            var cashRegisterProcessor = new CashRegisterProcessor(productPriceProviderTestDouble, cashRegisterProcessorRendererTestDouble);
+            var barcodeInterpreterTestDouble = new BarcodeInterpreterTestDouble();
+            var cashRegisterProcessor = new CashRegisterProcessor(productPriceProviderTestDouble, cashRegisterProcessorRendererTestDouble, barcodeInterpreterTestDouble);
 
-            cashRegisterProcessor.OnBarcode(unknownBarcode);
+            cashRegisterProcessor.OnBarcode("123");
 
             Assert.Equal(unknownProductPriceResult, cashRegisterProcessorRendererTestDouble.ResultToRender);
         }
@@ -82,6 +82,14 @@ namespace Tests.Tests
             public IProductPriceResult GetPrice(Barcode barcode)
             {
                 return _productPriceResult;
+            }
+        }
+
+        public class BarcodeInterpreterTestDouble : IBarcodeInterpreter
+        {
+            public Barcode Interpret(string value)
+            {
+                return new Barcode(value);
             }
         }
     }

@@ -2,7 +2,12 @@
 
 namespace Tests.Implementation.HappyZone
 {
-    public class BarcodeInterpreter
+    public interface IBarcodeInterpreter
+    {
+        Barcode Interpret(string value);
+    }
+
+    public class BarcodeInterpreter : IBarcodeInterpreter
     {
         public Barcode Interpret(string value)
         {
