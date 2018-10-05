@@ -1,4 +1,6 @@
 using Tests.Implementation;
+using Tests.Implementation.Dmz;
+using Tests.Implementation.HappyZone;
 using Xunit;
 
 namespace Tests.HappyZone.Dmz

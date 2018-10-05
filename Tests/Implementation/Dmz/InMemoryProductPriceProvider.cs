@@ -1,7 +1,7 @@
 using System.Linq;
-using Tests.Implementation;
+using Tests.Implementation.HappyZone;
 
-namespace Tests.HappyZone
+namespace Tests.Implementation.Dmz
 {
     public class InMemoryProductPriceProvider : IProductPriceProvider
     {

@@ -1,6 +1,7 @@
 ﻿using System;
+using Tests.Implementation.HappyZone;
 
-namespace Tests.Implementation
+namespace Tests.Implementation.Dmz
 {
     public class ConsoleCashRegisterProcessorRenderer : ICashRegisterProcessorRenderer
     {

@@ -1,4 +1,5 @@
 using Tests.Implementation;
+using Tests.Implementation.HappyZone;
 using Xunit;
 
 namespace Tests.HappyZone

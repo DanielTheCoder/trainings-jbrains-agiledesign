@@ -1,6 +1,4 @@
-using System.IO;
-
-namespace Tests.Implementation
+namespace Tests.Implementation.HappyZone
 {
     public class CashRegisterProcessor
     {
