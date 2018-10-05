@@ -28,7 +28,7 @@ namespace Tests.Tests
         [Fact]
         public void End2End_KnownProductBarcode_WillResultIn_ProductPrice()
         {
-            var knownBarcode = new Barcode();
+            var knownBarcode = new Barcode("123");
             var knownProductPriceResult = new KnownProductPriceResult();
 
             var cashRegisterProcessorRendererTestDouble = new CashRegisterRendererTestDouble();
@@ -47,7 +47,7 @@ namespace Tests.Tests
             // smell => internals are external visibile, implementation detail
 
 
-            var unknownBarcode = new Barcode();
+            var unknownBarcode = new Barcode("123");
             var unknownProductPriceResult = new UnknownProductPriceResult();
 
             var cashRegisterProcessorRendererTestDouble = new CashRegisterRendererTestDouble();
